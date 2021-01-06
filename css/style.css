@@ -1,3 +1,4 @@
+/* Reset CSS */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -42,6 +43,8 @@ table {
 	border-spacing: 0;
 }
 
+/* Fin Reset CC */
+/* All */
 
 *{
     background-color: black;
@@ -51,6 +54,10 @@ table {
 a:link{
     text-decoration: none;
 }
+
+/* Fin All */
+/* Topbar */
+
 .topbar{
     display: flex;
     justify-content: space-between;
@@ -72,20 +79,41 @@ a:link{
 .bouton_topbar:hover{
     color: #ED1C23;
 }
-/* faire hover sur menu avec felxbox */
-/* Effet Accueil */
+
+/* Fin Topbar */
+/* Accueil */
+
 h2{
     margin-left: 80px;
     margin-bottom: 80px;
-    color: #ED1C23;
+    color: white;
     font-family: 'Roboto', sans-serif;
     font-size: 36px;
+    background: linear-gradient(to top,#ED1C23 0%, #ED1C23 10%, transparent 10.01% ) no-repeat;
+    background-size: 0 100% ;
+    transition: background .3s;
+
+}
+h2:hover{
+    background-size: 100% 100%;
+    color: #ED1C23;
+}
+a{
+    background: linear-gradient(to top,#ED1C23 0%, #ED1C23 10%, transparent 10.01% ) no-repeat;
+    background-size: 0 100% ;
+    transition: background .3s;
+}
+a:hover{
+    background-size: 100% 100%;
 }
 h6{
     margin-top: 100px;
     color: #ED1C23;
     text-align: center;
     font-family: 'Roboto', sans-serif;
+}
+h6:hover{
+    color: white;
 }
 #container{
     top: 0px;
@@ -97,17 +125,29 @@ h6{
     align-items: center;
   }
   
-.slide_one{
-    top: -150px;
-    left: 30px;
+.slide_two{
+    top: -100px;
+    left: -200px;
     display: block;
     position: relative;
     height: auto;
     width: 400px;
+    background-color: transparent;
 }
-.slide_two{
-   top: -20px;
-    left: 220px;
+.slide_three{
+    top: 50px;
+    left: 70px;
+    display: block;
+    position: relative;
+    height: 35px;
+    width: 35px;
+    background: #ED1C23; 
+    border-radius: 100%;
+   
+}
+.slide_one{
+    top: -150px;
+    left: -100px;
     display: block;
     position: relative;
     height: 350px;
@@ -116,32 +156,30 @@ h6{
     border-radius: 100%;
     
 }
-.slide_three{
-    top: -300px;
-    left: -650px;
-    display: block;
-    position: relative;
-    height: 35px;
-    width: 35px;
-    background: #ED1C23; 
-    border-radius: 100%;
+#logo_accueil{
+    background-color: transparent;
 }
+/* Fin Accueil */
 /* Actualités */
+
 #actualites{
     height: 700px;
+    display: flex;
+    flex-direction: column;
 }
 .slider{
     display: flex;
     justify-content: center;
     margin-top: 100px;
-    margin-bottom: 150px;
+    margin-bottom: 75px;
     
 }
 .slider2{
     text-align: center;
+    border-radius: 30px;
     width: 1000px;
     height: 250px;
-    background-color: red;
+    background-color: #ED1C23;
     opacity: 40%;
 
 }
@@ -149,17 +187,404 @@ h6{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
-.bouton_general{
-    background-color: #ED1C23;
-    width: 150px;
-    height: 50px;
-    border-radius: 30px;
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    color: black;
+
+.lien_general a{
+    color: #ED1C23;
+    font-family: 'Roboto', sans-serif ;
+}
+.top_section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 80px;
 }
 #footer_general{
-    justify-content: end;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 80px;
 }
+#logo_footer{
+    margin-top: -40px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+/* End Actualités */
+/* Les Boxs */
+
+#les_boxs{
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+#exemple_box{
+    display: flex;
+    justify-content: center;
+    width: 1200px;
+    height: 400px;
+    margin:auto;
+}
+.carre_box{
+    width: 400px;
+    height: 400px;
+    background-color: #ED1C23;
+    opacity: 40%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#img_carre_box{
+    width: 300px;
+    height: 300px;
+    background-color: transparent;
+}
+.carre_text_box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    width: 200px;
+    height: 400px;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+}
+.detail{
+    list-style: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+}
+ul{
+    background-color: transparent;
+}
+li{
+    color: black;
+    padding-bottom: 50px;
+    background-color: transparent;
+}
+/*End Les Boxs */
+/* Simulateur */
+
+#simulateur{
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+.container_simulateur{
+    display: flex;
+    justify-content: center;
+}
+.contenu_simulateur{
+    display: flex;
+    justify-content: center;
+    border-radius: 30px;
+    width: 80%;
+    height: 450px;
+    background-color: #ED1C23;
+    
+}
+
+table{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+    border: solid;
+    height: 400px;
+    width: 900px;
+}
+
+.head_table{
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+tbody{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 250px;
+    
+}
+tr.body_table{
+    /* overflow-y: auto; */
+    display: flex;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 10px;
+}
+td.container_piece{
+    border: solid 1px ;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 250px;
+    overflow-y: auto;
+}
+.container_piece a{
+    text-align: center;
+    border:solid;
+    margin: 5px;
+    padding: 5px;
+    transition: none;
+    
+}
+.container_piece a:hover{
+    color: red;
+    background:none;
+}
+
+td.container_objet{
+    border:solid 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 250px;
+    width: 50%;
+    overflow-y: auto;
+}
+
+.objet{
+    border: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    width: 90%;
+}
+
+#img_simulateur{
+    border: solid white;
+}
+
+.quantite_objet{
+display: flex;
+
+}
+.bouton_moins_plus{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    border:solid 1px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#input_objet{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 2px;
+    width: 30px;
+    color: black;
+}
+
+tfoot{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    height: 50px;
+    margin-top: 30px;
+}
+
+#input_surface{
+    color: black;
+    width: 40px;
+    height: 30px;
+}
+
+#input_volume{
+    color: black;
+    width: 40px;
+    height: 30px;
+}
+
+.space_result{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+input{
+    background-color: white;
+}
+/* End Simulateur */
+/* Le Parc */
+
+h5{
+    margin-top: 50px;
+    color: #ED1C23;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+h5:hover{
+    color: white;
+}
+#le_parc{
+    height: 1620px;
+    display: flex;
+    flex-direction: column;
+}
+.container_le_parc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.securite{
+    
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.img_espacement{
+    margin: 40px;
+    border-radius: 15px;
+}
+#text_securite{
+    font-family: 'Roboto', sans-serif;
+    margin: 40px;
+    text-align: center;
+    width: 275px;
+}
+#localiser{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.localiser{
+    display: flex;
+    flex-direction: row;
+}
+.img_localiser{
+    border-radius: 15px;
+}
+#container_effet{
+    width: 400px;
+    height: -10px;
+}
+#container2 {
+    position: relative;
+    height: 30vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .slide_four {
+    display: block;
+    position: absolute;
+    width: 275px;
+    
+    text-align: center;
+  }
+#img2{
+    width: 350px;
+    height: 300px;
+    background-color: black;
+    position: absolute;
+}
+
+/* End Le Parc */
+/* Contact */
+
+#contact{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: 500px;
+    width: 100%;
+}
+
+h3{
+    background-color: white;
+    margin-left: 80px;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+    background: linear-gradient(to top,#ED1C23 0%, #ED1C23 10%, transparent 10.01% ) no-repeat;
+    background-size: 0 100% ;
+    transition: background .3s;
+
+}
+h3:hover{
+    background-size: 100% 100%;
+    color: #ED1C23;
+}
+.titre_contact{
+    display: flex;
+    justify-self: center;
+    background-color: transparent;
+    
+}
+.formulaire{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    margin-top: 20px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 14px;
+    padding: 30px;
+    width: 500px;
+    color: black;
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.form_action{
+    margin: 5px;
+    color: black;
+    background-color: white;
+}
+input{
+    border-radius: 5px;
+}
+button{
+    margin-top: 10px;
+    border-radius: 5px;
+}
+#envoyer{
+    align-self: center; 
+    width: 100px;
+    height:30px;
+}
+.arrow-down {
+    background-color: transparent;
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    align-self: center;
+    border-top: 20px solid  #ED1C23;
+  }
+/* End Contact */
+#footer{
+    padding-top: 10px;
+    height: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    background-color: black;
+}
+
