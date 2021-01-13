@@ -54,3 +54,11 @@
   });
 
 })(jQuery); // End of use strict
+
+$(document).ready(function() {
+  $('#id_client').select2();
+});
+
+$(document).ready(function() {
+  $('#id_box').select2();
+});

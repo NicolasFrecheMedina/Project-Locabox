@@ -6,10 +6,10 @@ include 'inc/connect.php';
 include 'inc/head.php';
 include 'inc/wrapper.php';
 
-$sql = 'SELECT * FROM role';
-$req = $bdd->prepare($sql);
-$req->execute();
-$roles = $req->fetchAll(PDO::FETCH_ASSOC);
+$sqlRoles = 'SELECT * FROM role';
+$reqRoles = $bdd->prepare($sqlRoles);
+$reqRoles->execute();
+$roles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
 // var_dump($roles);
 
 ?>
@@ -19,7 +19,7 @@ $roles = $req->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if (isset($_SESSION["ajout_utilisateur"]) && $_SESSION["ajout_utilisateur"] == false) { ?>
         <div class="alert alert-danger col-11 text-center mx-auto" role="alert">
-            Le utilisateur n'a pas été créer, les champs <?php echo implode(", ", $_SESSION["erreurs_ajout"]) ?> sont faux.
+            L'utilisateur n'a pas été créer, les champs <?php echo implode(", ", $_SESSION["erreurs_ajout"]) ?> sont faux.
         </div>
     <?php 
         unset($_SESSION["ajout_utilisateur"]);
@@ -50,18 +50,18 @@ $roles = $req->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="avatar">Avatar :</label>
-            <input type="file" id="avatar" name="avatar">
+            <input type="file" id="avatar"  name="avatar">
         </div>
         <div class="form-group">
-                    <label for="role">Rôle(s) :</label>
-                    <select class="form-control user-role" id="role" name="role[]" multiple="multiple">
-                        <?php  foreach ($roles as $role): ?>
-                            <option value="<?= $role['id'] ?>"><?= $role['libelle'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <label for="role">Rôle(s) :</label>
+                <select class="form-control user-role" id="role" name="role[]" multiple="multiple">
+                    <?php  foreach ($roles as $role){ ?>
+                        <option value="<?= $role['id'] ?>"><?= $role['libelle'] ?></option>
+                    <?php } ?>
+                </select>
+        </div>
         <div class="text-center">
-            <button type="submit" class="btn btn-success" name="btn_ajout">Créer le utilisateur</button>
+            <button type="submit" class="btn btn-success" name="btn_ajout">Créer l'utilisateur</button>
             <a href="../index.php" class="text-center btn btn-primary">Retour</a>
         </div>
     </div>

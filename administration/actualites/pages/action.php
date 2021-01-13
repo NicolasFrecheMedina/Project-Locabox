@@ -1,94 +1,80 @@
 <?php
-    session_start();
+include 'inc/config.php';
+include 'inc/connect.php';
 
-    include "../inc/connection.php";
+if (isset($_POST['update_actu'])){
+    var_dump($_POST);
+    $uploadfile = 'img/illustration/'.$_FILES["illustration"]["name"];
+    
+    if (!move_uploaded_file($_FILES['illustration']['tmp_name'], $uploadfile)){
+        // 'ERROR !';
+        // header('location:modif.php');
+        die;
+    }else{
+        $illustration = $_FILES["illustration"]["name"];
+    }
+    $sql = 'UPDATE actualite SET titre = "'. $_POST['titre'] .'", contenu = "'. $_POST['contenu'] .'",illustration = "'.$illustration.'", slug = "'. $_POST['slug'] .'", 0';
+    $req = $bdd->prepare($sql);
+    if ($req->execute()){
+        header('location:../index.php');
+        die;
+    }
+}
 
+if (isset($_POST['add_actu'])){
     // var_dump($_POST);
-    // var_dump($_GET);
-
-    // Fonction ajout
-    if (isset($_POST["btn_ajout"])) {
-        // echo "Page action ajout";
-        unset($_POST["btn_ajout"]);
-
-        $nom = $_POST["nom"];
-        $prenom = $_POST["prenom"];
-        $adresse = $_POST["adresse"];
-        $ville = $_POST["ville"];
-        $code_postal = $_POST["code_postal"];
-
-        foreach ($_POST as $index => $value) {
-            if (empty($value)) {
-                $_SESSION["erreurs_ajout"][] = $index;
-            }
-        }
-        if (strlen($code_postal) != 5 && !empty($code_postal)) {
-            $_SESSION["erreurs_ajout"][] = "code_postal";
-        }
-        if(isset($_SESSION["erreurs_ajout"])){
-            $_SESSION["ajout_client"] = false;
-            header("location:ajout.php");
-            die;
-        };
-
-
-        $sql = "INSERT INTO client VALUES (NULL, '$nom', '$prenom', '$adresse', '$ville', '$code_postal','0')";
-        if ($bdd -> exec($sql)) {
-            $_SESSION["ajout_client"] = true;
-            header("location:../index.php");
-            die;
-        } 
+    // var_dump($_FILES);
+    $uploadfile = 'img/illustration/'.$_FILES["illustration"]["name"];
+    if (!move_uploaded_file($_FILES['illustration']['tmp_name'], $uploadfile)){
+        // 'ERROR !';
+        header('location:ajout.php');
+        die;
+    }else{
+        $illustration = $_FILES["illustration"]["name"];
     }
+    // REDIMENSSION DE L'IMAGE
+
+    $source = imagecreatefromjpeg('img/illustration/'.$illustration.'');
+//    var_dump($source);
+//    die;
+    // On crée la miniature vide
+    $illustration_miniature = imagecreatetruecolor(250, 250);
+    // renvoient la largeur et la hauteur d'une image
+    $largeur_source = imagesx($source);
+    $hauteur_source = imagesy($source);
+    // on ajoute l'image à source à l'image vierge
+    $largeur_destination = imagesx($illustration_miniature);
+    $hauteur_destination = imagesy($illustration_miniature);
+    // On crée la miniature
+    imagecopyresampled($illustration_miniature, $source, 0, 0, 0, 0, $largeur_destination, $hauteur_destination, $largeur_source, $hauteur_source);
+    // On l'enregistre dans uploads/mini/
+    imagejpeg($illustration_miniature, "img/illustration/miniatures/mini-".$illustration);
+    $miniIllustration ="mini-".$illustration;
 
 
-    // Fontion modif
-    if (isset($_POST["btn_modif"])) {
-        // echo "Page action modif";
-        unset($_POST["btn_modif"]);
-
-        $id = $_POST["id"];
-        $nom = $_POST["nom"];
-        $prenom = $_POST["prenom"];
-        $adresse = $_POST["adresse"];
-        $ville = $_POST["ville"];
-        $code_postal = $_POST["code_postal"];
-        
-        foreach ($_POST as $index => $value) {
-            if (empty($value)) {
-                $_SESSION["erreurs_modif"][] = $index;
-            }
-        }
-        if (strlen($code_postal) != 5 && !empty($code_postal)) {
-            $_SESSION["erreurs_modif"][] = "code_postal";
-        }
-        if(isset($_SESSION["erreurs_modif"])){
-            $_SESSION["modif_client"] = false;
-            header("location:modif.php?id=".$id);
-            die;
-        };
-        
-
-        $sql = "UPDATE client SET nom = '$nom', prenom = '$prenom', adresse = '$adresse', ville = '$ville', code_postal = '$code_postal', statut = '0' WHERE id= '$id'";
-        $req = $bdd->prepare($sql);
-        if ($req -> execute()) {
-            $_SESSION["modif_client"] = true;
-            header("location:../index.php");
-            die;
-        }
+    
+    $sql = 'INSERT INTO actualite VALUES (NULL,"'.$_POST['titre'] .'","'.$_POST['contenu'] .'",NOW(),"'.$illustration .'","'. $miniIllustration.'","'.$_POST['slug'] .'", 0)';
+    $req = $bdd->prepare($sql);
+    if (!$req->execute()){
+        var_dump($sql);
+        header('location:ajout.php');
+        die;
     }
+    $id = $bdd->lastInsertId();
+    header('location:voir.php?id='.$id);
+    die;
+}
 
+ // Fonction supprimer
+ if (isset($_GET["btn"])) {
+    echo "Page action supprimer";
+   $id = $_GET["id"];
+   $sql = "UPDATE actualite SET statut=1 WHERE id='$id'";
+   $req = $bdd->prepare($sql);
 
-    // Fonction supprimer
-    if (isset($_GET["btn"])) {
-        // echo "Page action supprimer";
-        $id = $_GET["id"];
-        $sql = "UPDATE client SET statut=1 WHERE id='$id'";
-        $req = $bdd->prepare($sql);
-
-        if ($req -> execute()) {
-            $_SESSION["suppr_client"] = true;
-            header("location:../index.php");
-            die;
-        }
-    }
-?>
+   if ($req -> execute()) {
+        $_SESSION["suppr_actu"] = true;
+       header("location:../index.php");
+       die;
+   }
+}

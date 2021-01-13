@@ -6,6 +6,21 @@ include 'inc/connect.php';
 include 'inc/head.php';
 include 'inc/wrapper.php';
 
+//Inner join pour voir voir index.php pour emplir html
+
+// $sql = "SELECT client.nom AS nom_client, prenom, numero, date_debut, date_fin,
+// location.id AS id_location, client.id AS id_client, box.id AS id_box
+// FROM location 
+// INNER JOIN client ON location.id_client=client.id
+// INNER JOIN box ON location.id_box=box.id
+// WHERE location.id=$_GET['id']";
+
+// $req = $bdd->prepare($sql);
+// $req->execute();
+// $locations = $req->fetchAll(PDO::FETCH_ASSOC);
+// //  var_dump($locations);
+
+
 $id = $_GET["id"];
 $sql = "SELECT * from location WHERE id=$id";
 $req = $bdd->prepare($sql);

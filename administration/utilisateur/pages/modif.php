@@ -1,16 +1,40 @@
 <?php
- session_start();
-// $_SESSION = array();
-// var_dump($_SESSION);
+
+include 'inc/config.php';
 include 'inc/connect.php';
 include 'inc/head.php';
 include 'inc/wrapper.php';
 
-$id = $_GET["id"];
-$sql = "SELECT * from utilisateur WHERE id=$id";
-$req = $bdd->prepare($sql);
-$req->execute();
-$utilisateurs = $req->fetch(PDO::FETCH_ASSOC);
+
+if (isset($_GET['id'])){
+    $id = intval($_GET['id']);
+    if ($id > 0){
+        $sql  = 'SELECT * FROM utilisateur WHERE id='.$id;
+        $req = $bdd->prepare($sql);
+        $req->execute();
+        $utilisateurs = $req->fetch(PDO::FETCH_ASSOC);
+    //   var_dump($utilisateurs);
+        $sqlRoles = 'SELECT * FROM role';
+        $reqRoles = $bdd->prepare($sqlRoles);
+        $reqRoles->execute();
+        $roles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
+    //    var_dump($roles);
+        $sqlRolesUtilisateur = 'SELECT * FROM utilisateur_role  WHERE utilisateur_role.id_utilisateur = '.$id;
+        $reqRolesUtilisateur = $bdd->prepare($sqlRolesUtilisateur);
+        $reqRolesUtilisateur->execute();
+        $rolesUtilisateur = $reqRolesUtilisateur->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($rolesUtilisateur);
+        foreach ($rolesUtilisateur as $role) {
+            $rolesId[] = $role['id_role'];
+        }
+    //   var_dump($rolesId);
+    }
+}
+// $id = $_GET["id"];
+// $sql = "SELECT * from utilisateur WHERE id=$id";
+// $req = $bdd->prepare($sql);
+// $req->execute();
+// $utilisateurs = $req->fetch(PDO::FETCH_ASSOC);
 // var_dump($utilisateurs);
 ?>
 <!-- Begin Page Content -->
@@ -26,7 +50,7 @@ $utilisateurs = $req->fetch(PDO::FETCH_ASSOC);
     unset($_SESSION["erreurs_modif"]);
 } ?>
 
-<form action="action.php" method="POST">
+<form action="action.php" method="POST" enctype="multipart/form-data">
     <div class="container col-8">
         <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
         <div class="form-group">
@@ -46,8 +70,25 @@ $utilisateurs = $req->fetch(PDO::FETCH_ASSOC);
             <input type="text" class="form-control" id="mail" name="mail" value="<?php echo $utilisateurs["mail"] ?>">
         </div>
         <div class="form-group">
+            <label class="font-weight-bold" for="mdp">Mot de passe :</label>
+            <input type="password" class="form-control" id="mdp" name="mdp" value="<?php echo $utilisateurs["mdp"] ?>">
+        </div>
+        <div class="form-group">
             <label class="font-weight-bold" for="avatar">Avatar</label>
-            <input type="text" class="form-control" id="avatar" name="avatar">
+            <input type="file" id="avatar" name="avatar" value="<?php echo $utilisateurs["avatar"] ?>">
+        </div>
+        <div class="form-group">
+            <label for="role">Rôle(s) :</label>
+            <select class="form-control user-role" id="role" name="role[]" multiple="multiple">
+                        <?php  foreach ($roles as $role):
+                                if (in_array($role["id"],$rolesId)) {
+                                    $selected='selected';
+                                }else {
+                                    $selected='';
+                                }?>
+                            <option value="<?= $role['id'] ?>" <?= $selected ?>><?= $role['libelle'] ?></option>
+                        <?php endforeach; ?>
+            </select>
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-info" name="btn_modif">Modifier l'utilisateur</button>

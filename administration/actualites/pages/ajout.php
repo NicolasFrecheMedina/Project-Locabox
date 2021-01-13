@@ -1,21 +1,13 @@
 <?php
-    session_start();
-    // var_dump($_SESSION);
-    // var_dump($_SESSION["erreurs_ajout"]);
-
-    include "../inc/connection.php";
+ session_start();
+ // $_SESSION = array();
+ // var_dump($_SESSION);
+ include 'inc/connect.php';
+ include 'inc/head.php';
+ include 'inc/wrapper.php';
+ 
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-    <title>Ajout Client</title>
-</head>
-<body>
-    <a href="../index.php" class="btn btn-dark m-2">Retour index</a>
+<div class="container-fluid">
 
     <h1 class="text-center my-2">Ajouter un nouveau Client</h1>
 
@@ -28,32 +20,44 @@
         unset($_SESSION["erreurs_ajout"]);
     } ?>
 
-    <form  action="action.php" method="POST">
-        <div class="container col-8">
-            <div class="form-group">
-                <label class="font-weight-bold" for="nom">Nom :</label>
-                <input type="text" class="form-control" name="nom" id="nom">
+
+
+<form action="action.php" method="POST" class="text-center" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="titre">Titre :</label>
+                        <input type="text" class="form-control" id="titre" name="titre">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="illustration">Illustration :</label>
+                        <input type="file" id="illustration" name="illustration">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="slug">Slug :</label>
+                        <input type="text" class="form-control" id="slug" name="slug">
+                    </div>
+                </div>
             </div>
+
             <div class="form-group">
-                <label class="font-weight-bold" for="prenom">Prenom :</label>
-                <input type="text" class="form-control" name="prenom" id="prenom">
-            </div>
-            <div class="form-group">
-                <label class="font-weight-bold" for="adresse">Adresse :</label>
-                <input type="text" class="form-control" name="adresse" id="adresse">
-            </div>
-            <div class="form-group">
-                <label class="font-weight-bold" for="ville">Ville :</label>
-                <input type="text" class="form-control" name="ville" id="ville">
-            </div>
-            <div class="form-group">
-                <label class="font-weight-bold" for="code_postal">Code postal :</label>
-                <input type="text" class="form-control" name="code_postal" id="code_postal">
-            </div>
-            <div class="text-center"><button type="submit" class="btn btn-success" name="btn_ajout">Ajouter le client</button></div>
-        </div>
+                    <label for="contenu">Contenu :</label>
+                    <textarea name="contenu" id="contenu" cols="30" rows="10"></textarea>
+                    <script>
+                            CKEDITOR.replace( 'contenu' );
+                    </script>
+                </div>
+           
+           
+            <button type="submit" name="add_actu" class="btn btn-success btn-lg">Créer</button> <a href="../index.php" class="btn btn-dark m-2">Retour index</a>
+
     </form>
 
-        
-</body>
-</html>
+</div>
+<?php
+include 'inc/footer.php';
+?>

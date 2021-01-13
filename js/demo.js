@@ -2,7 +2,7 @@
 var timeout;
 $('#container').mousemove(function(e){
   if(timeout) clearTimeout(timeout);
-  setTimeout(callParallax.bind(null, e), 500);
+  setTimeout(callParallax.bind(null, e), 200);
   
 });
 
@@ -23,6 +23,48 @@ function parallaxIt(e, target, movement){
     ease: Power2.easeOut
   })
 }
+
+//Carousel
+
+const slider = document.querySelector(".items");
+		const slides = document.querySelectorAll(".item");
+		const button = document.querySelectorAll(".button-actu");
+
+		let current = 0;
+		let prev = 4;
+		let next = 1;
+
+		for (let i = 0; i < button.length; i++) {
+			button[i].addEventListener("click", () => i == 0 ? gotoPrev() : gotoNext());
+		}
+
+		const gotoPrev = () => current > 0 ? gotoNum(current - 1) : gotoNum(slides.length - 1);
+
+		const gotoNext = () => current < 4 ? gotoNum(current + 1) : gotoNum(0);
+
+		const gotoNum = number => {
+			current = number;
+			prev = current - 1;
+			next = current + 1;
+
+			for (let i = 0; i < slides.length; i++) {
+				slides[i].classList.remove("active");
+				slides[i].classList.remove("prev");
+				slides[i].classList.remove("next");
+			}
+
+			if (next == 5) {
+				next = 0;
+			}
+
+			if (prev == -1) {
+				prev = 4;
+			}
+
+			slides[current].classList.add("active");
+			slides[prev].classList.add("prev");
+			slides[next].classList.add("next");
+		}
 
 // Effet logo localiser
 $("#container2").mousemove(function(e) {
@@ -82,7 +124,13 @@ function calcul() {
     volume = parseFloat(volume);
     total_surface = total_surface + (surface * nb);
     total_volume = total_volume + (volume * nb);
-    
+    let test_surface = $('#input_surface')
+    //  console.log(test);
+    test_surface.val(total_surface);
+
+    let test_volume = $('#input_volume')
+    //  console.log(test_volume);
+    test_volume.val(total_volume);
   })
   console.log(total_surface);
   // console.log(total_volume);

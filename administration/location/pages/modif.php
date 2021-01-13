@@ -39,11 +39,11 @@ $locations = $req->fetch(PDO::FETCH_ASSOC);
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="date_debut">Date de début :</label>
-            <input type="datetime" class="form-control" id="date_debut" name="date_debut" value="<?php echo $locations["date_debut"] ?>">
+            <input type="date" class="form-control" id="date_debut" name="date_debut" value="<?php echo $locations["date_debut"] ?>">
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="date_fin">Date de fin :</label>
-            <input type="datetime" class="form-control" id="date_fin" name="date_fin" value="<?php echo $locations["date_fin"] ?>">
+            <input type="date" class="form-control" id="date_fin" name="date_fin" value="<?php echo $locations["date_fin"] ?>">
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="contrat">Contrat :</label>

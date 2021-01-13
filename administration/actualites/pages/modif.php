@@ -1,68 +1,62 @@
 <?php
-    session_start();
-    // var_dump($_SESSION);
-    // var_dump($_SESSION["erreurs_modif"]);
-
-    include "../inc/connection.php";
     
+    include 'inc/config.php';
+    include 'inc/connect.php';
+    include 'inc/head.php';
+    include 'inc/wrapper.php';
     // var_dump($_GET["id"]);
-    $id = $_GET["id"];
-    $sql = "SELECT * from client WHERE id=$id";
-    $req = $bdd->prepare($sql);
-    $req->execute();
-    $donnees = $req->fetch(PDO::FETCH_ASSOC);
-    // var_dump($donnees);
+
+    if (isset($_GET['id'])){
+        $id = intval($_GET['id']);
+        if ($id > 0){
+            $sql = 'SELECT * FROM actualite WHERE id='.$id;
+            $req = $bdd->prepare($sql);
+            $req->execute();
+            $actualite = $req->fetch(PDO::FETCH_ASSOC);
+        }
+    }
+    
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-    <title>Ajout Client</title>
-</head>
-<body>
-<a href="../index.php" class="btn btn-dark m-2">Retour index</a>
+<div class="container">
+        <h1 class="text-center mt-4">Update actualite</h1>
+        <form action="action.php" method="POST" class="text-center" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?= $actualite['id'] ?>">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="titre">Titre :</label>
+                        <input type="text" class="form-control" id="titre" name="titre" value="<?= $actualite['titre'] ?>">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="slug">Slug :</label>
+                        <input type="text" class="form-control" id="slug" name="slug" value="<?= $actualite['slug'] ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="illustration">Illustration :</label>
+                        <img src="<?= $actualite['illustration'] ?>" alt="">
+                        <input type="file" id="illustration" name="illustration">
+                    </div>
+                </div>
+            
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="contenu">Contenu :</label>
+                        <textarea name="contenu" id="contenu" cols="30" rows="10"><?= $actualite['contenu'] ?></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <input type="submit" name="update_actu" value="modifier" class="btn btn-warning">
+            <a href="../index.php" class="btn btn-primary"> retour</a>
+        </form>
+</div>
 
-<h1 class="text-center my-2">Modifier le client <?php echo $id ?></h1>
-
-<?php if (isset($_SESSION["modif_client"]) && $_SESSION["modif_client"] == false) { ?>
-        <div class="alert alert-danger col-11 text-center mx-auto" role="alert">
-            Le client n'a pas été modifié, les champs <?php echo implode(", ", $_SESSION["erreurs_modif"]) ?> sont faux.
-        </div>
 <?php
-    unset($_SESSION["modif_client"]); 
-    unset($_SESSION["erreurs_modif"]);
-} ?>
-
-<form action="action.php" method="POST">
-    <div class="container col-8">
-        <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
-        <div class="form-group">
-            <label class="font-weight-bold" for="nom">Nom :</label>
-            <input type="text" class="form-control" id="nom" name="nom" value="<?php echo $donnees["nom"] ?>">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="prenom">Prenom :</label>
-            <input type="text" class="form-control" id="prenom" name="prenom" value="<?php echo $donnees["prenom"] ?>">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="adresse">Adresse :</label>
-            <input type="text" class="form-control" id="adresse" name="adresse" value="<?php echo $donnees["adresse"] ?>">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="ville">Ville :</label>
-            <input type="text" class="form-control" id="ville" name="ville" value="<?php echo $donnees["ville"] ?>">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="code_postal">Code postal :</label>
-            <input type="text" class="form-control" id="code_postal" name="code_postal" value="<?php echo $donnees["code_postal"] ?>">
-        </div>
-        <div class="text-center"><button type="submit" class="btn btn-info" name="btn_modif">Modifier le client</button></div>
-    </div>
-</form>
-
-    
-</body>
-</html>
+include 'inc/footer.php';

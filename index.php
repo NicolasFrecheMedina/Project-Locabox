@@ -2,6 +2,12 @@
 
 include 'connect.php';
 
+$sqlActu = 'SELECT * FROM actualite WHERE statut = 0 ORDER BY date_creation LIMIT 5';
+$reqActu = $bdd->prepare($sqlActu);
+$reqActu->execute();
+$actus = $reqActu->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($actus);
+
 $sql = 'SELECT * FROM piece';
 $req = $bdd->prepare($sql);
 $req->execute();
@@ -67,10 +73,32 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
         <div class="top_section">
             <div>
                 <a href="#actualites"><h2>Actualités</h2></a>
-            </div>
         </div>
-        <div class="slider">
-            <div class="slider2">Coucou</div>
+        </div>
+    <div class="slider">
+
+            <div class="items">
+            <div class="item active">
+                <img src="img/miniature/photo1.jpg">
+            </div>
+            <div class=" item next">
+                <a href="#">Coucou<img src="img/miniature/photo11.png"></a>
+            </div>
+            <div class="item">
+               <img src="img/miniature/photo13.PNG">
+            </div>
+            <div class="item">
+                <img src="img/miniature/photo12.PNG">
+            </div>
+            <div class="item prev">
+                <img src="img/miniature/photo10.PNG">
+            </div>
+            <div class="button-container-actu">
+                <div class="button-actu"><</div>
+                <div class="button-actu">></div>
+            </div>
+	</div>
+      
         </div>   
         <div class="footer_general">
             <div class="lien_general">
@@ -168,7 +196,7 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
                             <div class="space_result">Surface totale : </div>
                         </td>
                         <td>
-                            <input class="space_result result_surface" id="input_surface" type="text">m<sup>2 </sup>
+                            <input class="space_result result_surface" id="input_surface" value='' type="text">m<sup>2 </sup>
                         </td>
                         <td>
                             <div class="space_result"> Volume totale : </div>

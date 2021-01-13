@@ -11,7 +11,8 @@ $sql = "SELECT * FROM utilisateur WHERE statut=0";
 $req = $bdd->prepare($sql);
 $req->execute();
 $utilisateurs = $req->fetchAll(PDO::FETCH_ASSOC);
-//  var_dump($utilisateurs);
+
+
 ?>
 <!-- Begin Page Content -->
     <?php if (isset($_SESSION["ajout_utilisateur"]) && $_SESSION["ajout_utilisateur"] == true) { ?>
@@ -34,6 +35,7 @@ $utilisateurs = $req->fetchAll(PDO::FETCH_ASSOC);
 
 
 <div class="container-fluid">
+    <h1>Utilisateur</h1>
 <div class="text-center"><a href="pages/ajout.php" class="btn btn-success mb-3">Créer nouveau utilisateur</a></div>
 <table class="table text-center">
             <thead class="thead-dark">
@@ -45,9 +47,11 @@ $utilisateurs = $req->fetchAll(PDO::FETCH_ASSOC);
                     <th>Mail</th>
                     <th>Avatar</th>
                     <th>Action</th>
+                   
                 </tr>
             </thead>
             <tbody>
+            
             <?php foreach ($utilisateurs as $key => $value) { ?>
                 <tr>
                     <td><?php echo $utilisateurs[$key]["id"] ?></td>
@@ -55,15 +59,16 @@ $utilisateurs = $req->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $utilisateurs[$key]["prenom"] ?></td>
                     <td><?php echo $utilisateurs[$key]["pseudo"] ?></td>
                     <td><?php echo $utilisateurs[$key]["mail"] ?></td>
-                    <td><img width="50px" height="50px" src="img/<?php echo $utilisateurs[$key]["avatar"] ?>" alt=""></td>
+                    <td><img width="50px" height="50px" src="img/avatar/<?php echo $utilisateurs[$key]["avatar"] ?>" alt=""></td>
                     <td>
                         <a href="pages/voir.php?id=<?php echo $utilisateurs[$key]['id'] ?>" class="btn btn-warning mb-2">Voir</a>
                         <a href="pages/modif.php?id=<?php echo $utilisateurs[$key]['id'] ?>" class="btn btn-info mb-2">Modifier</a>
                         <a href="pages/action.php?id=<?php echo $utilisateurs[$key]['id'] ?> & btn=btn_suppr" class="btn btn-danger mb-2">Supprimer</a>
-                    </td>
-         
+                    </td>                
                 </tr>
+      
             <?php } ?>
+
             </tbody>
         </table>
 
