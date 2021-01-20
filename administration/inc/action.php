@@ -10,21 +10,22 @@ if(isset($_POST["pseudo"]) && isset($_POST["mdp"])){
         $sql= 'SELECT * FROM utilisateur WHERE pseudo = "'.$_POST['pseudo'].'"';
         $req=$bdd->prepare($sql);
         $req->execute();
-        $resultat = $req->fetch(PDO::FETCH_ASSOC);
-// var_dump ($resultat);
+        $utilisateur = $req->fetch(PDO::FETCH_ASSOC);
+ var_dump ($utilisateur);
 
-        if (!$resultat)
+        if ($utilisateur === false)
         {
             header('Location: ../login.php');
-            die();
+            die;
         }
-        if(!password_verify($_POST['mdp'], $resultat['mdp'])){
+        if(!password_verify($_POST['mdp'], $utilisateur['mdp'])){
             header('Location: ../login.php');
-            die();
+            die;
         }
-        unset($resultat['mdp']);
+        
         $_SESSION['connect']=true;
-        $_SESSION['user']=$user;
+        unset($utilisateur['mdp']);
+        $_SESSION['utilisateur']=$utilisateur;
         header('Location:../index.php');
         die;
     }

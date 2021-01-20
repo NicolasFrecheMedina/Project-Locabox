@@ -5,8 +5,8 @@ include 'connect.php';
 $sqlActu = 'SELECT * FROM actualite WHERE statut = 0 ORDER BY date_creation LIMIT 5';
 $reqActu = $bdd->prepare($sqlActu);
 $reqActu->execute();
-$actus = $reqActu->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($actus);
+$actualites = $reqActu->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($actualites);
 
 $sql = 'SELECT * FROM piece';
 $req = $bdd->prepare($sql);
@@ -58,7 +58,6 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
 
 <!--End Topbar -->
 <!-- Accueil -->
-
 <h6>BIENVENUE SUR</h6>
     <div id="container">
         <div class="slide_one"></div>
@@ -75,29 +74,22 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
                 <a href="#actualites"><h2>Actualités</h2></a>
         </div>
         </div>
+        <?php foreach ($actualites as $actualite): ?>
+                <div class="titre_actu"><?= $actualite['titre'] ?></div>
+        <?php endforeach; ?>  
     <div class="slider">
-
-            <div class="items">
-            <div class="item active">
-                <img src="img/miniature/photo1.jpg">
-            </div>
-            <div class=" item next">
-                <a href="#">Coucou<img src="img/miniature/photo11.png"></a>
-            </div>
-            <div class="item">
-               <img src="img/miniature/photo13.PNG">
-            </div>
-            <div class="item">
-                <img src="img/miniature/photo12.PNG">
-            </div>
-            <div class="item prev">
-                <img src="img/miniature/photo10.PNG">
-            </div>
-            <div class="button-container-actu">
-                <div class="button-actu"><</div>
-                <div class="button-actu">></div>
-            </div>
-	</div>
+            <div class="items"> 
+            <?php foreach ($actualites as $actualite): ?>
+                    <div class="item active">   
+                        <img src="<?= 'administration/actualites/img/illustration/miniature/'. $actualite['illustration_miniature'] ?>">
+                        
+                    </div>
+            <?php endforeach; ?>
+                    <div class="button-container-actu">
+                        <div class="button-actu"><</div>
+                        <div class="button-actu">></div>
+                    </div>
+	        </div>
       
         </div>   
         <div class="footer_general">
@@ -290,12 +282,28 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
 <!-- End Le Parc -->
 <!-- Contact -->
 <div id="contact">
+<?php if (isset($_SESSION["message_envoye"]) && $_SESSION["message_envoye"] == false) { ?>
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Le message n'a pas été envoyé, les champs <?php echo implode(", ", $_SESSION["erreur_message"]) ?> sont faux.
+    </div>    
+    <?php unset($_SESSION["erreur_massage"]); } ?>
+
+    <?php if (isset($_SESSION["message_envoye"]) && $_SESSION["message_envoye"] == true) { ?>
+        <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        Message envoyé!
+    </div>    
+    <?php unset($_SESSION["message_envoye"]); } ?>
+    <!-- gérer alerte ne s'affiche pas -->
+
     <div class="titre_contact">
         <h3>Contact</h3>
-    </div>    
+    </div> 
+  
     <div class="arrow-down"></div>
                 <div class="formulaire">
-                    <form  action="">
+                    <form  action="action.php" method="POST">
                         <label class="form_action" for="nom">Nom : </label>
                         <input class="form_action" type="text" name="nom" id="nom"> 
                         <label class="form_action" for="prenom">Prénom : </label>
@@ -307,8 +315,8 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
                         <label class="form_action" for="objet">Objet : </label>
                         <input class="form_action" type="text" name="objet" id="objet">
                         <label class="form_action" for="message">Message : </label>
-                        <input class="form_action" type="textarea" name="message" id="message">
-                        <button href="#contact" id="envoyer">Envoyer</button>
+                        <textarea  class="form_action"name="message" id="message" cols="30" rows="10"></textarea>
+                        <button href="#contact" id="btn-contact" type="submit" name="btn-contact">Envoyer</button>
                     </form>
                 </div>
             

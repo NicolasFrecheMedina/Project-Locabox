@@ -39,15 +39,28 @@
 
 
         $sql = "INSERT INTO box VALUES (NULL, '$numero', '$nom', '$surface', '$volume', '$prix','0','0')";
-        if ($bdd -> exec($sql)) {
-            $_SESSION["ajout_box"] = true;
-            header("location:../index.php");
+        if (!$bdd -> exec($sql)) {
+           
+            header("location:action.php");
             die;
         } 
+
+        $id = $bdd->lastInsertId();
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,NULL,NULL,'.$_SESSION["utilisateur"]["id"].', 1 , NOW() ,'.$id.',NULL)';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+           
+            header("location:action.php");
+            die;
+        }
+        $_SESSION["ajout_box"] = true;
+        header("location:../index.php");
+        die;
     }
 
 
-    // Fontion modif
+    // Fonction modif
     if (isset($_POST["btn_modif"])) {
         // echo "Page action modif";
         unset($_POST["btn_modif"]);
@@ -73,11 +86,23 @@
 
         $sql = "UPDATE box SET  numero = '$numero', nom = '$nom', surface = '$surface', volume = '$volume', prix = '$prix', statut = '0' WHERE id= '$id'";
         $req = $bdd->prepare($sql);
-        if ($req -> execute()) {
-            $_SESSION["modif_box"] = true;
-            header("location:../index.php");
+        if (!$req -> execute()) {
+            header("location:action.php");
             die;
         }
+        
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,NULL,NULL,'.$_SESSION["utilisateur"]["id"].', 2 , NOW() ,'.$id.',NULL)';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+            header("location:../../index.php");
+            die;
+        }
+
+        $_SESSION["modif_box"] = true;
+        // header("location:action.php");
+        header("location:../index.php");
+        die;
     }
 
 
@@ -88,10 +113,23 @@
         $sql = "UPDATE box SET statut=1 WHERE id='$id'";
         $req = $bdd->prepare($sql);
 
-        if ($req -> execute()) {
-             $_SESSION["suppr_box"] = true;
-            header("location:../index.php");
+        if (!$req -> execute()) {
+             $_SESSION["suppr_box"] = false;
+            header("location:action.php");
             die;
         }
+
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,NULL,NULL,'.$_SESSION["utilisateur"]["id"].', 3 , NOW() ,'.$id.',NULL)';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+           
+            header("location:action.php");
+            die;
+        }
+
+        $_SESSION["suppr_box"] = true;
+        header("location:../index.php");
+        die;
     }
 ?>

@@ -86,7 +86,14 @@
                 <a class="nav-link" href="utilisateur">
                     <span>Utilisateurs</span></a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="contact">
+                    <span>Contact</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="action">
+                    <span>Action</span></a>
+            </li>
             <hr class="sidebar-divider d-none d-md-block">
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

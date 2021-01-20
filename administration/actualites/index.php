@@ -17,17 +17,7 @@ $actualites = $req->fetchAll(PDO::FETCH_ASSOC);
 // var_dump($actualites);
 ?>
 
-<?php if (isset($_SESSION["ajout_actu"]) && $_SESSION["ajout_actu"] == true) { ?>
-        <div class="alert alert-success col-11 text-center mx-auto" role="alert">
-            L'actualité a été créer !
-        </div>
-    <?php unset($_SESSION["ajout_actu"]); } ?>
 
-    <?php if (isset($_SESSION["modif_actu"]) && $_SESSION["modif_actu"] == true) { ?>
-        <div class="alert alert-info col-11 text-center mx-auto" role="alert">
-            L'actualité a été modifié !
-        </div>
-    <?php unset($_SESSION["modif_actu"]); } ?>
 
     <?php if (isset($_SESSION["suppr_actu"]) && $_SESSION["suppr_actu"] == true) { ?>
         <div class="alert alert-danger col-11 text-center mx-auto" role="alert">

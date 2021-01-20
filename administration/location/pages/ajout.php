@@ -6,12 +6,12 @@ include 'inc/connect.php';
 include 'inc/head.php';
 include 'inc/wrapper.php';
 
-$sqlClient = 'SELECT * FROM client';
+$sqlClient = 'SELECT * FROM client  WHERE statut=0';
 $reqClient = $bdd->prepare($sqlClient);
 $reqClient->execute();
 $clients = $reqClient->fetchAll(PDO::FETCH_ASSOC);
 
-$sqlBox = 'SELECT * FROM box';
+$sqlBox = 'SELECT * FROM box WHERE statut=0 AND disponibilite = 0';
 $reqBox = $bdd->prepare($sqlBox);
 $reqBox->execute();
 $boxs = $reqBox->fetchAll(PDO::FETCH_ASSOC);
@@ -36,16 +36,16 @@ $boxs = $reqBox->fetchAll(PDO::FETCH_ASSOC);
             <label for="id_client">Client :</label>
                 <select class="form-control id_client" id="id_client" name="id_client">
                     <?php  foreach ($clients as $client){ ?>
-                        <option value=" <?= $client['id'] ?>"> ID: <?= $client['id'] ?> / Nom : <?= $client['nom'] ?> / Prénom : <?= $client['prenom'] ?></option>
+                        <option value=" <?= $client['id'] ?>"> Client n° <?= $client['id'] ?> / Nom : <?= $client['nom'] ?> / Prénom : <?= $client['prenom'] ?></option>
                     <?php } ?>
                 </select>
         </div>
         
         <div class="form-group">
             <label for="id_box">Box :</label>
-                <select class="form-control id_box" id="id_box" name="id_box" multiple="multiple">
+                <select class="form-control id_box" id="id_box" name="id_box" >
                     <?php  foreach ($boxs as $box){ ?>
-                        <option value=" <?= $box['id'] ?>">ID: <?= $box['id']?> / Surface: <?= $box['surface']?>m<sup>2</sup> / Volume: <?= $box['volume']?>m<sup>3</sup></option>
+                        <option value=" <?= $box['id'] ?>"><?= $box['nom'] ?> / ID: <?= $box['id']?> / Surface: <?= $box['surface']?>m<sup>2</sup> / Volume: <?= $box['volume']?>m<sup>3</sup></option>
                     <?php } ?>
                 </select>
         </div>

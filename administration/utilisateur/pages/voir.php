@@ -27,19 +27,31 @@ if (isset($_GET['id'])){
         $roles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
 //        var_dump($roles);
         $sqlRolesUtilisateur = 'SELECT * FROM utilisateur_role  WHERE utilisateur_role.id_utilisateur = '.$id;
-        $sqlRolesUtilisateur = $bdd->prepare($sqlRolesUtilisateur);
-        $sqlRolesUtilisateur->execute();
-        $rolesUtilisateur = $sqlRolesUtilisateur->fetchAll(PDO::FETCH_ASSOC);
+        $reqRolesUtilisateur = $bdd->prepare($sqlRolesUtilisateur);
+        $reqRolesUtilisateur->execute();
+        $rolesUtilisateur = $reqRolesUtilisateur->fetchAll(PDO::FETCH_ASSOC);
     //    var_dump($rolesUtilisateur);
         foreach ($rolesUtilisateur as $role) {
             $rolesId[] = $role['id_role'];
         }
     //    var_dump($rolesId);
+    
     }
 }
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
+<?php if (isset($_SESSION["ajout_utilisateur"]) && $_SESSION["ajout_utilisateur"] == true) { ?>
+        <div class="alert alert-success col-11 text-center mx-auto" role="alert">
+            L'utilisateur a été créer !
+        </div>
+<?php unset($_SESSION["ajout_utilisateur"]); } ?>
+<?php if (isset($_SESSION["modif_utilisateur"]) && $_SESSION["modif_utilisateur"] == true) { ?>
+        <div class="alert alert-info col-11 text-center mx-auto" role="alert">
+            L'utilisateur a été modifié !
+        </div>
+<?php unset($_SESSION["modif_utilisateur"]); } ?>
+
 <h1 class="text-center">utilisateur n° <?php echo $utilisateurs["id"] ?></h1>
 
 <table class="table text-center">

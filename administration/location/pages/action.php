@@ -11,42 +11,74 @@
     if (isset($_POST['btn_ajout'])){
         //    var_dump($_POST);
         //   die;
+        unset($_POST['btn_ajout']);
+
+        foreach ($_POST as $key => $value) {
+            if(empty($value)){
+                $error[]= $key;
+                }
+            }
+            // var_dump($error);
           
             $sql = 'INSERT INTO location VALUES(NULL,"'. $_POST['id_client'] .'", "'. $_POST['id_box'] .'", "'. $_POST['date_debut'] .'", "'. $_POST['date_fin'] .'","NULL", 0)';
             $req = $bdd->prepare($sql);
             if (!$req->execute()){
-                var_dump($sql);
-                header('location:ajout.php');
+               
+                header('location:../index.php');
                 die;
             }
-          
+            var_dump($sql);
+
             $id = $bdd->lastInsertId();
-            foreach ($_POST['id_box'] as $box){
-                $sqlBox = "UPDATE box SET disponibilite=1 WHERE id='$id'";
-                $req = $bdd->prepare($sqlBox);
-                $req->execute();
+            $sqlBox = 'UPDATE box SET disponibilite= 1 WHERE id='.$_POST['id_box'];
+            $reqBox = $bdd->prepare($sqlBox);
+            $reqBox->execute();
+            
+            var_dump($sqlBox);
+
+            // $id = $bdd->lastInsertId();
+            $sql='INSERT INTO action_utilisateur(id,id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,'.$id.',NULL,'.$_SESSION["utilisateur"]["id"].', 1 , NOW() ,NULL,NULL)';
+            var_dump($sql);
+            $req = $bdd->prepare($sql);
+            if (!$req -> execute()) {
+               
+                header("location:action.php");
+                die;
             }
+            
+            $_SESSION["ajout_location"] = true;
             header('location:voir.php?id='.$id);
+                
         }
 
     // Fonction supprimer
     if (isset($_GET["btn"])) {
         //  echo "Page action supprimer";
+        unset($_GET['btn']);
+        
         $id = $_GET["id"];
         $sql = "UPDATE location SET statut=1 WHERE id='$id'";
         $req = $bdd->prepare($sql);
-        if ($req -> execute()) {
-             $_SESSION["suppr_location"] = true;
-            header("location:../index.php");
+        $req -> execute();
+         
+        
+        $id = $bdd->lastInsertId();
+        $sqlBox = 'UPDATE box SET disponibilite= 0 WHERE id='.$_GET['id_box'];
+        $reqBox = $bdd->prepare($sqlBox);
+        $reqBox->execute();
+
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,'.$id.',NULL,'.$_SESSION["utilisateur"]["id"].', 4 , NOW() ,NULL,NULL)';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+           
+            header("location:action.php");
             die;
         }
         
-            // foreach ($_POST['id_box'] as $box){
-            //     $sqlBox = "UPDATE box SET disponibilite=0 WHERE id='$id'";
-            //     $req = $bdd->prepare($sqlBox);
-            //     $req->execute();
-            // }
-            // header('location:../index.php');
+            $_SESSION["suppr_location"] = true;
+            header("location:../index.php");
+            die;
     }
 
     if (isset($_GET["btn2"])) {

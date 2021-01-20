@@ -9,14 +9,14 @@
 ?>
 <div class="container-fluid">
 
-    <h1 class="text-center my-2">Ajouter un nouveau Client</h1>
+    <h1 class="text-center my-2">Créer nouvelle actualité</h1>
 
-    <?php if (isset($_SESSION["ajout_client"]) && $_SESSION["ajout_client"] == false) { ?>
+    <?php if (isset($_SESSION["ajout_actu"]) && $_SESSION["ajout_actu"] == false) { ?>
         <div class="alert alert-danger col-11 text-center mx-auto" role="alert">
-            Le client n'a pas été ajouté, les champs <?php echo implode(", ", $_SESSION["erreurs_ajout"]) ?> sont faux.
+            L'actualité n'a pas été ajouté, les champs <?php echo implode(", ", $_SESSION["erreurs_ajout"]) ?> sont faux.
         </div>
     <?php 
-        unset($_SESSION["ajout_client"]);
+        unset($_SESSION["ajout_actu"]);
         unset($_SESSION["erreurs_ajout"]);
     } ?>
 
@@ -53,7 +53,7 @@
                 </div>
            
            
-            <button type="submit" name="add_actu" class="btn btn-success btn-lg">Créer</button> <a href="../index.php" class="btn btn-dark m-2">Retour index</a>
+            <button type="submit" name="add_actu" class="btn btn-success">Créer</button> <a href="../index.php" class="btn btn-dark m-2">Retour index</a>
 
     </form>
 

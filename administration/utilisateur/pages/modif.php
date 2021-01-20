@@ -43,12 +43,9 @@ if (isset($_GET['id'])){
 
 <?php if (isset($_SESSION["modif_utilisateur"]) && $_SESSION["modif_utilisateur"] == false) { ?>
         <div class="alert alert-danger col-11 text-center mx-auto" role="alert">
-            L'utilisateur n'a pas été modifié, les champs <?php echo implode(", ", $_SESSION["erreurs_modif"]) ?> sont faux.
+            L'utilisateur n'a pas été modifié !
         </div>
-<?php
-    unset($_SESSION["modif_utilisateur"]); 
-    unset($_SESSION["erreurs_modif"]);
-} ?>
+    <?php unset($_SESSION["modif_utilisateur"]); } ?>
 
 <form action="action.php" method="POST" enctype="multipart/form-data">
     <div class="container col-8">
@@ -68,14 +65,6 @@ if (isset($_GET['id'])){
         <div class="form-group">
             <label class="font-weight-bold" for="mail">Mail</label>
             <input type="text" class="form-control" id="mail" name="mail" value="<?php echo $utilisateurs["mail"] ?>">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="mdp">Mot de passe :</label>
-            <input type="password" class="form-control" id="mdp" name="mdp" value="<?php echo $utilisateurs["mdp"] ?>">
-        </div>
-        <div class="form-group">
-            <label class="font-weight-bold" for="avatar">Avatar</label>
-            <input type="file" id="avatar" name="avatar" value="<?php echo $utilisateurs["avatar"] ?>">
         </div>
         <div class="form-group">
             <label for="role">Rôle(s) :</label>

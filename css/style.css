@@ -82,7 +82,6 @@ a:link{
 
 /* Fin Topbar */
 /* Accueil */
-
 h2{
     margin-left: 80px;
     margin-bottom: 80px;
@@ -179,7 +178,12 @@ h6:hover{
 }
 
 /* Carousel  */
-
+.titre_actu{
+    top: 0px;
+    right: 0px;
+    color: white;
+  /* carroussel à gerer */
+}
 .items {
     position: absolute;
     top: 1300px;
@@ -188,7 +192,7 @@ h6:hover{
     user-select: none;
     
   }
-  
+
   .items .item {
     position: absolute;
     top: 50%;
@@ -595,13 +599,31 @@ h5:hover{
 
 /* End Le Parc */
 /* Contact */
-
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
+  
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
 #contact{
     margin-top: 25px;
     display: flex;
     flex-direction: column;
     background-color: white;
-    height: 500px;
+    height: 80px;
     width: 100%;
 }
 
@@ -626,13 +648,17 @@ h3:hover{
     background-color: transparent;
     
 }
+
 .formulaire{
     display: flex;
+    position: relative;
     justify-content: center;
     background-color: white;
     margin-top: 20px;
+    
 }
 form{
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -655,12 +681,12 @@ button{
     margin-top: 10px;
     border-radius: 5px;
 }
-#envoyer{
+#btn-contact{
     align-self: center; 
     width: 100px;
     height:30px;
 }
-.arrow-down {
+.arrow-down{
     background-color: transparent;
     width: 0; 
     height: 0; 
@@ -669,6 +695,7 @@ button{
     align-self: center;
     border-top: 20px solid  #ED1C23;
   }
+
 /* End Contact */
 #footer{
     padding-top: 10px;

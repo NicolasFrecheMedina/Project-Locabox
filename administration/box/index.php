@@ -12,6 +12,9 @@ $req = $bdd->prepare($sql);
 $req->execute();
 $boxs = $req->fetchAll(PDO::FETCH_ASSOC);
 //  var_dump($boxs);
+
+
+  
 ?>
 <!-- Begin Page Content -->
     <?php if (isset($_SESSION["ajout_box"]) && $_SESSION["ajout_box"] == true) { ?>
@@ -44,6 +47,7 @@ $boxs = $req->fetchAll(PDO::FETCH_ASSOC);
                     <th>Surface en m<sup>2</sup></th>
                     <th>Volume en m<sup>3</sup></th>
                     <th>Prix</th>
+                    <th>Disponibilité</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -56,6 +60,12 @@ $boxs = $req->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo $boxs[$key]["surface"] ?> m<sup>2</sup></td>
                     <td><?php echo $boxs[$key]["volume"] ?> m<sup>3</sup></td>
                     <td><?php echo $boxs[$key]["prix"] ?> €</td>
+                    <?php
+                    if ($boxs[$key]["disponibilite"] == 0)
+                        echo '<td style="background : #3DDA19;"> DISPONIBLE </td>';
+                    else
+                        echo '<td style="background : #BA001A;"> INDISPONIBLE</td>';
+                     ?>       
                     <td>
                     <a href="pages/voir.php?id=<?php echo $boxs[$key]['id'] ?>" class="btn btn-warning mb-2">Voir</a>
                     <a href="pages/modif.php?id=<?php echo $boxs[$key]['id'] ?>" class="btn btn-info mb-2">Modifier</a>

@@ -55,11 +55,24 @@
 
 
         $sql = "INSERT INTO client VALUES (NULL, '$nom', '$prenom', '$adresse', '$ville', '$code_postal','$mail','$telephone_fixe','$telephone_portable','$siret','$denomination_sociale','0')";
-        if ($bdd -> exec($sql)) {
-            $_SESSION["ajout_client"] = true;
-            header("location:../index.php");
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+            header("location:action.php");
             die;
         } 
+        
+        $id = $bdd->lastInsertId();
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,NULL,NULL,'.$_SESSION["utilisateur"]["id"].', 1 , NOW() ,NULL,'.$id.')';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+            header("location:action.php");
+            die;
+        }
+
+        $_SESSION["ajout_client"] = true;
+        header("location:../index.php");
+        die;
     }
 
 
@@ -113,11 +126,23 @@
 
         $sql = "UPDATE client SET  nom = '$nom', prenom = '$prenom', adresse = '$adresse', ville = '$ville', code_postal = '$code_postal', mail = '$mail', telephone_fixe = '$telephone_fixe', telephone_portable = '$telephone_portable', siret = '$siret', denomination_sociale = '$denomination_sociale', statut = '0' WHERE id= '$id'";
         $req = $bdd->prepare($sql);
-        if ($req -> execute()) {
-            $_SESSION["modif_client"] = true;
-            header("location:../index.php");
+        if (!$req -> execute()) {
+          
+            header("location:action.php");
             die;
         }
+
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,NULL,NULL,'.$_SESSION["utilisateur"]["id"].', 2 , NOW() ,NULL,'.$id.')';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+            header("location:action.php");
+            die;
+        }
+
+        $_SESSION["modif_client"] = true;
+        header("location:../index.php");
+        die;
     }
 
 
@@ -127,10 +152,20 @@
         $id = $_GET["id"];
         $sql = "UPDATE client SET statut=1 WHERE id='$id'";
         $req = $bdd->prepare($sql);
-        if ($req -> execute()) {
-             $_SESSION["suppr_client"] = true;
-            header("location:../index.php");
+        if (!$req -> execute()) {
+            header("location:action.php");
             die;
         }
+        $sql='INSERT INTO action_utilisateur(id, id_location, id_actualite, id_utilisateur, id_action, date_modification, id_box, id_client) VALUES (NULL,NULL,NULL,'.$_SESSION["utilisateur"]["id"].', 3 , NOW() ,NULL,'.$id.')';
+        var_dump($sql);
+        $req = $bdd->prepare($sql);
+        if (!$req -> execute()) {
+            header("location:action.php");
+            die;
+        }
+
+        $_SESSION["suppr_client"] = true;
+        header("location:../index.php");
+        die;
     }
 ?>
