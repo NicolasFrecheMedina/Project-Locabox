@@ -72,30 +72,28 @@ $objets_pieces = $req->fetchAll(PDO::FETCH_ASSOC);
         <div class="top_section">
             <div>
                 <a href="#actualites"><h2>Actualités</h2></a>
+            </div>
         </div>
-        </div>
-        <?php foreach ($actualites as $actualite): ?>
-                <div class="titre_actu"><?= $actualite['titre'] ?></div>
-        <?php endforeach; ?>  
-    <div class="slider">
-            <div class="items"> 
-            <?php foreach ($actualites as $actualite): ?>
-                    <div class="item active">   
-                        <img src="<?= 'administration/actualites/img/illustration/miniature/'. $actualite['illustration_miniature'] ?>">
-                        
-                    </div>
-            <?php endforeach; ?>
-                    <div class="button-container-actu">
-                        <div class="button-actu"><</div>
-                        <div class="button-actu">></div>
-                    </div>
-	        </div>
-      
+        <div class="slider">
+                <div class="items"> 
+                <?php foreach ($actualites as $actualite): ?>
+                        <div class="item active"> 
+                            <div class="container_titre">  
+                              <div class="titre_actu">  <a href="pages/fiche_actu.php?id=<?= $actualite['id']; ?>"><?= $actualite['titre'] ?></a></div>
+                            </div>
+                            <img src="<?= 'administration/actualites/img/illustration/miniature/'. $actualite['illustration_miniature'] ?>">      
+                        </div>
+                <?php endforeach; ?>
+                        <div class="button-container-actu">
+                            <div class="button-actu">&#10094;</div>
+                            <div class="button-actu">&#10095;</div>
+                        </div>
+	            </div>
         </div>   
         <div class="footer_general">
-            <div class="lien_general">
-                <a href="pages/actualites.php" > TOUTES LES ACTUALITÉS ></a>
-            </div>           
+                <div class="lien_general">
+                    <a href="pages/actualites.php" > TOUTES LES ACTUALITÉS ></a>
+                </div>           
         </div> 
     </div>
     

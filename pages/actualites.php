@@ -32,6 +32,7 @@ $actualites = $req->fetchAll(PDO::FETCH_ASSOC);
            <th>Titre</th>
            <th>Contenu</th>
            <th>Slug</th>
+           <th>Date publication</th>
            <th>Action</th>
        </tr>
        </thead>
@@ -41,6 +42,7 @@ $actualites = $req->fetchAll(PDO::FETCH_ASSOC);
                <th scope="row"><?= $actualite['titre'] ?></th>
                <td><?= substr($actualite['contenu'],0,100) ?></td>
                <td><?= $actualite['slug'] ?></td>
+               <td><?= $actualite['date_creation']?></td>
                <td><a type="button" href="fiche_actu.php?id=<?= $actualite['id']; ?>">Fiche actualité</a></td>
            </tr>
        <?php endforeach; ?>

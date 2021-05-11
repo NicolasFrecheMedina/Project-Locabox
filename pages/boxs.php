@@ -56,6 +56,7 @@ $boxs = $req->fetchAll(PDO::FETCH_ASSOC);
             <?php } ?>
             </tbody>
 </table>
+<a href="../index.php#les_boxs"><button> Retour</button></a>
         <button>Prendre réservation</button>
 
 

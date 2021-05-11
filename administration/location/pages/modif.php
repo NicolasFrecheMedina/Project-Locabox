@@ -11,7 +11,7 @@ $sql = "SELECT * from location WHERE id=$id";
 $req = $bdd->prepare($sql);
 $req->execute();
 $locations = $req->fetch(PDO::FETCH_ASSOC);
-// var_dump($locations);
+//  var_dump($locations);
 ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -31,15 +31,15 @@ $locations = $req->fetch(PDO::FETCH_ASSOC);
     <input type="hidden" id="id" name="id" value="<?php echo $id ?>">
     <div class="form-group">
             <label class="font-weight-bold" for="id_client">ID Client :</label>
-            <input type="text" class="form-control" id="id_client" name="id_client" value="<?php echo $locations["id_client"] ?>">
+            <input type="text" class="form-control" id="client" name="id_client" disabled value="<?php echo $locations["id_client"] ?>">
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="id_box">ID Box :</label>
-            <input type="text" class="form-control" id="id_box" name="id_box" value="<?php echo $locations["id_box"] ?>">
+            <input type="text" class="form-control" id="box" name="id_box" disabled value="<?php echo $locations["id_box"] ?>">
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="date_debut">Date de début :</label>
-            <input type="date" class="form-control" id="date_debut" name="date_debut" value="<?php echo $locations["date_debut"] ?>">
+            <input type="date" class="form-control" id="date_debut" name="date_debut" disabled value="<?php echo $locations["date_debut"] ?>">
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="date_fin">Date de fin :</label>
@@ -47,7 +47,7 @@ $locations = $req->fetch(PDO::FETCH_ASSOC);
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="contrat">Contrat :</label>
-            <input type="text" class="form-control" id="contrat" name="contrat" value="<?php echo $locations["contrat"] ?>">
+            <input type="text" class="form-control" id="contrat" name="contrat" disabled value="<?php echo $locations["contrat"] ?>">
         </div>
         <div class="text-center">
             <button type="submit" class="btn btn-info" name="btn_modif">Modifier la location</button>

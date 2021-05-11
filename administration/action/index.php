@@ -7,7 +7,7 @@ include "inc/connect.php";
 include 'inc/head.php';
 include 'inc/wrapper.php';
 
-
+// faire un requete pour récupérer des informations sur des tables différente l'utilisateur et son act Expliquer ALIAS car il peuvent avoir une meme dénomination et appartenir à des tables différentes
 $sql='SELECT client.id AS id_client , action.libelle , utilisateur.nom AS nom_utilisateur , 
 utilisateur.prenom AS prenom_utilisateur , utilisateur.id AS id_utilisateur, 
 box.id AS box_id , location.id AS id_location ,actualite.id AS id_actualite,

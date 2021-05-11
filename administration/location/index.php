@@ -1,4 +1,3 @@
-
 <?php
  session_start();
 // $_SESSION = array();
@@ -7,10 +6,8 @@ include "inc/connect.php";
 include 'inc/head.php';
 include 'inc/wrapper.php';
 
-// $sql = 'SELECT location.id AS id_location, box.id AS id_box, client.id AS id_client, date_debut, date_fin, contrat, nom, prenom, adresse, code_postal, ville, numero, prix FROM location INNER JOIN client ON client.id = location.id_client INNER JOIN box ON box.id = location.id_box WHERE location.statut=0';
-
-$sql = "SELECT client.nom AS nom_client, prenom, numero, date_debut, date_fin,
-location.id AS id_location, client.id AS id_client, box.id AS id_box, box.nom AS nom_box
+$sql = "SELECT client.nom AS nom_client, prenom, numero, date_debut, date_fin, location.id 
+AS id_location, client.id AS id_client, box.id AS id_box, box.nom AS nom_box
 FROM location 
 INNER JOIN client ON location.id_client=client.id
 INNER JOIN box ON location.id_box=box.id
@@ -31,11 +28,6 @@ $req->execute();
 $locations_ko = $req->fetchAll(PDO::FETCH_ASSOC);
 //  var_dump($locations);
 
-// $sql = "SELECT * FROM location WHERE statut=1";
-// $req = $bdd->prepare($sql);
-// $req->execute();
-// $locations_ko = $req->fetchAll(PDO::FETCH_ASSOC);
-//  var_dump($locations_ko);
 ?>
 <!-- Begin Page Content -->
     <?php if (isset($_SESSION["ajout_location"]) && $_SESSION["ajout_location"] == true) { ?>
@@ -93,7 +85,6 @@ $locations_ko = $req->fetchAll(PDO::FETCH_ASSOC);
                             echo $date_fin -> format('d/m/Y') ;
                         ?>
                     </td>
-                    
                     <td>
                     <a href="pages/voir.php?id=<?php echo $location['id_location'] ?>" class="btn btn-warning mb-2">Voir</a>
                     <a href="pages/modif.php?id=<?php echo $location['id_location'] ?>" class="btn btn-info mb-2">Modifier</a>
@@ -111,6 +102,7 @@ $locations_ko = $req->fetchAll(PDO::FETCH_ASSOC);
                     <th>Box</th>
                     <th>Date de début</th>
                     <th>Date de fin</th>
+                    <th>Durée totale location</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -131,6 +123,7 @@ $locations_ko = $req->fetchAll(PDO::FETCH_ASSOC);
                             echo $date_fin -> format('d/m/Y') ;
                         ?>
                     </td>
+                    <td>Compte durée location</td>
                     <td>
                         <a href="pages/voir.php?id=<?php echo $location_ko['id_location'] ?>" class="btn btn-warning mb-2">Voir</a>
                         <a href="pages/action.php?id=<?php echo $location_ko['id_location'] ?> & btn2=btn_restaurer" class="btn btn-info mb-2">Restaurer</a>

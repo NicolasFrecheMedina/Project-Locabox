@@ -1,7 +1,7 @@
 <?php
 include 'inc/config.php';
 include 'inc/connect.php';
-  echo password_hash('demo5', PASSWORD_DEFAULT);
+  // echo password_hash('demo5', PASSWORD_DEFAULT);
 
 if (is_connect()) {
    header('Location : index.php');

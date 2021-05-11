@@ -10,11 +10,37 @@ include 'inc/wrapper.php';
 
 
 
-$sql = 'SELECT * FROM actualite WHERE statut = 0';
+// On détermine sur quelle page on se trouve
+if(isset($_GET['page']) && !empty($_GET['page'])){
+    $currentPage = (int) strip_tags($_GET['page']);
+}else{
+    $currentPage = 1;
+}
+
+// On détermine le nombre total d'articles
+$sql = 'SELECT COUNT(*) AS nb_actu FROM actualite ;';
 $req = $bdd->prepare($sql);
 $req->execute();
+$nb_actualites = $req->fetch(PDO::FETCH_ASSOC);
+//  var_dump($nb_boxs);
+$nbactus= intval($nb_actualites['nb_actu']);
+//  var_dump($nbactus);
+
+$parPage = 5;
+
+// On calcule le nombre de pages total
+$pages = ceil($nbactus / $parPage);
+
+// // Calcul du 1er article de la page
+$premier = ($currentPage * $parPage) - $parPage;
+
+$sql = 'SELECT * FROM actualite ORDER BY id LIMIT :premier, :parpage; WHERE statut=0';
+$req = $bdd->prepare($sql);
+$req->bindValue(':premier', $premier, PDO::PARAM_INT);
+$req->bindValue(':parpage', $parPage, PDO::PARAM_INT);
+$req->execute();
 $actualites = $req->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($actualites);
+
 ?>
 
 
@@ -58,6 +84,24 @@ $actualites = $req->fetchAll(PDO::FETCH_ASSOC);
        </tbody>
    </table>
 </div>
+<nav class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <!-- Lien vers la page précédente (désactivé si on se trouve sur la 1ère page) -->
+                        <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
+                            <a href="./?page=<?= $currentPage - 1 ?>" class="page-link">Précédente</a>
+                        </li>
+                        <?php for($page = 1; $page <= $pages; $page++): ?>
+                          <!-- Lien vers chacune des pages (activé si on se trouve sur la page correspondante) -->
+                          <li class="page-item <?= ($currentPage == $page) ? "active" : "" ?>">
+                                <a href="./?page=<?= $page ?>" class="page-link"><?= $page ?></a>
+                            </li>
+                        <?php endfor ?>
+                          <!-- Lien vers la page suivante (désactivé si on se trouve sur la dernière page) -->
+                          <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">
+                            <a href="./?page=<?= $currentPage + 1 ?>" class="page-link">Suivante</a>
+                        </li>
+                    </ul>
+                </nav>
 
 
 <?php

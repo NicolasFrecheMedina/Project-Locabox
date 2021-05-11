@@ -19,6 +19,8 @@ $roles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if (isset($_SESSION["ajout_utilisateur"]) && $_SESSION["ajout_utilisateur"] == false) { ?>
         <div class="alert alert-danger col-11 text-center mx-auto" role="alert">
+        <!-- La fonction implode() transforme un tableau en chaine de caractère, il prend 2 paramètres, ici ', ' pour espacer
+         et le deuxième prend pour paramètres les erreurs du tableau -->
             L'utilisateur n'a pas été créer, les champs <?php echo implode(", ", $_SESSION["erreurs_ajout"]) ?> sont faux.
         </div>
     <?php 
@@ -54,6 +56,7 @@ $roles = $reqRoles->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="form-group">
             <label for="role">Rôle(s) :</label>
+                <!-- permet de faire de stocker plusieurs réponse car utilisateur peut avoir plusieurs rôle cardinalités 0.n sur mcd -->
                 <select class="form-control user-role" id="role" name="role[]" multiple="multiple">
                     <?php  foreach ($roles as $role){ ?>
                         <option value="<?= $role['id'] ?>"><?= $role['libelle'] ?></option>

@@ -166,10 +166,8 @@ h6:hover{
     display: flex;
     flex-direction: column;
 }
+
 .slider{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 75px;
     height: 400px;
     margin: 0;
     padding: 0;
@@ -178,15 +176,46 @@ h6:hover{
 }
 
 /* Carousel  */
+.container_titre{
+    width: 250px;
+    height: 250px;
+    background-color: transparent;
+    position: absolute;
+}
+.titre_actu a:hover{
+    text-decoration: none;
+    background: none;
+    color:white;
+    font-size: 100px;
+    padding-top: 20px ;
+    
+}
+
+.container_titre:hover{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+    background-color: red;
+    
+    
+}
+
 .titre_actu{
-    top: 0px;
-    right: 0px;
-    color: white;
-  /* carroussel à gerer */
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: transparent;
+    position: absolute;
+    bottom: 70px;
 }
 .items {
     position: absolute;
-    top: 1300px;
+    top: 1250px;
     left: 50%;
     transform: translate(-50%, -50%);
     user-select: none;
@@ -659,7 +688,7 @@ h3:hover{
 }
 form{
     
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     font-size: 14px;
@@ -676,6 +705,11 @@ form{
 }
 input{
     border-radius: 5px;
+    border-width: medium;
+}
+textarea{
+    border-radius: 5px;
+    border-width: medium;
 }
 button{
     margin-top: 10px;
@@ -688,13 +722,16 @@ button{
 }
 .arrow-down{
     background-color: transparent;
-    width: 0; 
-    height: 0; 
+   
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     align-self: center;
     border-top: 20px solid  #ED1C23;
   }
+
+.arrow-down :hover{
+    cursor: pointer;
+}
 
 /* End Contact */
 #footer{
